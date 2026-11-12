@@ -97,7 +97,7 @@ jobs:
           ls -lh release-assets/
 
       - name: Enviar artefatos da plataforma
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: release-${{ runner.os }}
           path: release-assets/*
@@ -121,7 +121,7 @@ jobs:
           cache: true
 
       - name: Enviar bundle Flatpak
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: release-Flatpak
           path: AlgoritmosLab-x86_64.flatpak
