@@ -1,0 +1,9 @@
+[package]
+name = "algoritmoslab-cli"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Executor CLI e runner de testes Golden para o algoritmoslab-core"
+
+[dependencies]
+algoritmoslab-core = { path = "../algoritmoslab-core" }

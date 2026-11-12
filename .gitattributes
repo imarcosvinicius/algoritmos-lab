@@ -1,0 +1,5 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# Preserve exact encodings (Windows-1252/UTF-8) and line endings (CRLF/LF) in golden fixtures
+tests/golden/** -text
