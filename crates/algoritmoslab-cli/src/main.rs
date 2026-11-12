@@ -10,6 +10,7 @@ use algoritmoslab_core::{
 };
 
 const MAX_ALG_FILE_BYTES: u64 = 4 * 1024 * 1024;
+const CLI_STACK_SIZE_BYTES: usize = 8 * 1024 * 1024;
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 enum CliCommand {
@@ -309,7 +310,25 @@ fn run_cli(args: &[String]) -> i32 {
 
 fn main() {
     let args: Vec<String> = env::args().skip(1).collect();
-    let code = run_cli(&args);
+    // No Windows a thread `main` tem pilha padrão de apenas 1 MiB; executamos a CLI em uma
+    // thread dedicada de 8 MiB (mesmo patamar da VM no host desktop e do Linux).
+    let code = match std::thread::Builder::new()
+        .name("algoritmoslab-cli".to_string())
+        .stack_size(CLI_STACK_SIZE_BYTES)
+        .spawn(move || run_cli(&args))
+    {
+        Ok(handle) => match handle.join() {
+            Ok(code) => code,
+            Err(_) => {
+                eprintln!("Erro interno inesperado durante a execução da CLI.");
+                1
+            }
+        },
+        Err(err) => {
+            eprintln!("Falha ao iniciar thread da CLI: {err}");
+            1
+        }
+    };
     if code != 0 {
         process::exit(code);
     }

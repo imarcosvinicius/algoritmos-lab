@@ -3,6 +3,7 @@ name = "algoritmoslab-core"
 version.workspace = true
 edition.workspace = true
 license.workspace = true
+authors.workspace = true
 description = "Interpretador e depurador puro em Rust de Portugol estruturado (.alg) para o AlgoritmosLab"
 
 [dependencies]
