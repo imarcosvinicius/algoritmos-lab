@@ -1,8 +1,22 @@
 # AlgoritmosLab
 
-**AlgoritmosLab** é uma IDE desktop aberta, leve e multiplataforma (Linux, Windows e macOS) para programação em **Portugol estruturado** (`.alg`).
+> **Alternativa livre, moderna e multiplataforma compatível com algoritmos `.alg` (Portugol estruturado / VisuAlg) para Linux, Windows e macOS.**
 
-Projetada para democratizar o ensino e a prática de lógica de programação fora do Windows sem abrir mão da compatibilidade com materiais clássicos de aula — funcionando **100% offline**, sem telemetria e sob licença **GPL-3.0-only**.
+**AlgoritmosLab** é uma IDE desktop aberta e leve para programação em **Portugol estruturado (`.alg`)**, criada para estudantes e professores praticarem lógica de programação nativamente no **Linux (qualquer distribuição via `.flatpak`, `.AppImage` ou `.deb`)**, **Windows (`.exe` / `.msi`)** e **macOS (`.dmg`)** — funcionando **100% offline**, sem telemetria e sob licença **GPL-3.0-only**.
+
+**[Baixar a versão mais recente (GitHub Releases)](https://github.com/imarcosvinicius/algoritmos-lab/releases)**
+
+---
+
+## Para quem procura VisuAlg no Linux, macOS ou alternativa no Windows
+
+Se você estuda ou ensina algoritmos usando apostilas clássicas em **`.alg`** e precisa rodar seus códigos fora do Windows (ou busca uma interface moderna no Windows com depuração visual e suporte a `UTF-8` / `Windows-1252`):
+
+- **Compatibilidade real com `.alg`:** abre diretamente arquivos antigos salvos no padrão `Windows-1252` (acentos corretos automaticamente) e `UTF-8`, permitindo inclusive **Salvar cópia em Windows-1252** para entregar trabalhos ou rodar em ambientes clássicos.
+- **Execução fiel da linguagem:** suporta `algoritmo`/`var`/`inicio`/`fimalgoritmo`, `const`, `tipo ... = registro`, `vetor`/`matriz` (inclusive índices negativos), `procedimento` e `funcao` com passagem por valor ou referência (`var`), recursão protegida, funções matemáticas e de texto (`raizq`, `pot`, `compr`, `copia`, `pos`, `randi`, etc.) e comandos clássicos (`leia`, `escreva`/`escreval` com formatação `:largura:decimais`, `escolha/caso`, `para`, `enquanto`, `repita`, `aleatorio`, `cronometro`, `timer`, `eco`, `mudacor`, `debug`, `pausa`, `arquivo`).
+- **Funciona em qualquer distribuição Linux:** além de `.deb` (Ubuntu/Debian/Mint/Pop!\_OS), conta com `.flatpak` e `.AppImage` universais (Fedora, Arch, openSUSE, Manjaro, Zorin OS, etc.).
+
+> *Aviso de independência: **AlgoritmosLab** é um projeto independente de código aberto (`GPL-3.0-only`), sem afiliação oficial, endosso ou vínculo com os autores ou detentores da marca VisuAlg™.*
 
 ---
 
