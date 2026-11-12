@@ -29,7 +29,7 @@ jobs:
 
     steps:
       - name: Baixar repositório
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Instalar dependências de sistema (Linux)
         if: runner.os == 'Linux'
@@ -111,7 +111,7 @@ jobs:
 
     steps:
       - name: Baixar repositório
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Construir bundle Flatpak (.flatpak)
         uses: flatpak/flatpak-github-actions/flatpak-builder@v6
