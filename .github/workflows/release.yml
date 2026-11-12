@@ -1,0 +1,148 @@
+name: Release Multiplataforma & Flatpak
+
+permissions:
+  contents: read
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build-tauri:
+    name: Release (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-22.04
+            bundles: deb,appimage
+          - os: windows-latest
+            bundles: nsis,msi
+          - os: macos-latest
+            bundles: dmg
+
+    steps:
+      - name: Baixar repositório
+        uses: actions/checkout@v4
+
+      - name: Instalar dependências de sistema (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libwebkit2gtk-4.1-dev \
+            libayatana-appindicator3-dev \
+            librsvg2-dev \
+            libxdo-dev \
+            libssl-dev \
+            patchelf \
+            file
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+
+      - name: Validar Frontend (Vitest + Build Vite)
+        run: |
+          npm ci
+          npm test
+          npm run build
+
+      - name: Configurar Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache Cargo (workspace + src-tauri)
+        uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: |
+            .
+            src-tauri
+
+      - name: Validar Núcleo Rust, CLI, Golden e Host Tauri
+        run: |
+          cargo test --workspace --locked
+          cargo run --locked -q -p algoritmoslab-cli -- --golden tests/golden
+          cargo test --manifest-path src-tauri/Cargo.toml --locked
+
+      - name: Empacotar aplicativo desktop (${{ matrix.bundles }})
+        env:
+          APPIMAGE_EXTRACT_AND_RUN: "1"
+        run: npx tauri build --bundles ${{ matrix.bundles }} -- --locked
+
+      - name: Coletar instaladores da plataforma
+        shell: bash
+        run: |
+          mkdir -p release-assets
+          shopt -s nullglob
+          for f in \
+            src-tauri/target/release/bundle/deb/*.deb \
+            src-tauri/target/release/bundle/appimage/*.AppImage \
+            src-tauri/target/release/bundle/nsis/*.exe \
+            src-tauri/target/release/bundle/msi/*.msi \
+            src-tauri/target/release/bundle/dmg/*.dmg
+          do
+            cp "$f" release-assets/
+          done
+          if [ -f "src-tauri/target/release/algoritmoslab.exe" ]; then
+            cp "src-tauri/target/release/algoritmoslab.exe" release-assets/AlgoritmosLab-portable-win64.exe
+          fi
+          ls -lh release-assets/
+
+      - name: Enviar artefatos da plataforma
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-${{ runner.os }}
+          path: release-assets/*
+
+  build-flatpak:
+    name: Empacotar Flatpak (Linux Universal)
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/flathub-infra/flatpak-github-actions:gnome-50
+      options: --privileged
+
+    steps:
+      - name: Baixar repositório
+        uses: actions/checkout@v4
+
+      - name: Construir bundle Flatpak (.flatpak)
+        uses: flatpak/flatpak-github-actions/flatpak-builder@v6
+        with:
+          bundle: AlgoritmosLab-x86_64.flatpak
+          manifest-path: packaging/flatpak/io.github.imarcosvinicius.AlgoritmosLab.yml
+          cache: true
+
+      - name: Enviar bundle Flatpak
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-Flatpak
+          path: AlgoritmosLab-x86_64.flatpak
+
+  publish-release:
+    name: Publicar GitHub Release
+    needs: [build-tauri, build-flatpak]
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Baixar todos os instaladores
+        uses: actions/download-artifact@v4
+        with:
+          path: dist-release
+          merge-multiple: true
+
+      - name: Publicar na aba Releases do GitHub
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
+          files: dist-release/*

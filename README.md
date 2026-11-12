@@ -51,10 +51,11 @@ Projetada para democratizar o ensino e a prática de lógica de programação fo
 
 ### Instaladores Pré-compilados (Usuários Finais)
 
-Para uso direto sem compilar o código-fonte, baixe os pacotes pré-compilados na página de **GitHub Releases** (ou nos artefatos recentes do **GitHub Actions**):
+Para uso direto sem compilar o código-fonte, baixe os pacotes pré-compilados na página de **GitHub Releases** (gerados por tag `v*`) ou nos artefatos recentes do **GitHub Actions**:
 
-- **Linux:** `.deb` ou `.AppImage`
-- **Windows:** `.exe` (NSIS) ou `.msi`
+- **Linux (qualquer distribuição):** `.flatpak` (instale com `flatpak install --user AlgoritmosLab-x86_64.flatpak`) ou `.AppImage`; manifesto Flathub completo em [packaging/flatpak/README.md](./packaging/flatpak/README.md)
+- **Ubuntu / Debian:** `.deb`
+- **Windows:** `*-setup.exe` (instalador NSIS), `AlgoritmosLab-portable-win64.exe` ou `.msi`
 - **macOS:** `.dmg`
 
 ### Pré-requisitos (Build Local)

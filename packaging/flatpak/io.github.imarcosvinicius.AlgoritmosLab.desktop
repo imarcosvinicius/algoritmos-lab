@@ -1,0 +1,14 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=AlgoritmosLab
+GenericName=IDE de Portugol Estruturado
+Comment=IDE educacional multiplataforma para algoritmos em Portugol estruturado (.alg)
+Exec=algoritmoslab %f
+Icon=io.github.imarcosvinicius.AlgoritmosLab
+Terminal=false
+Categories=Development;IDE;
+Keywords=Portugol;Algoritmos;Logica;IDE;Educacao;
+MimeType=text/x-alg;
+StartupNotify=true
+StartupWMClass=algoritmoslab

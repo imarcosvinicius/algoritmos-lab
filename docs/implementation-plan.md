@@ -12,7 +12,7 @@ algoritmoslab/
 ├── crates/
 │   ├── algoritmoslab-core/    # Biblioteca pura em Rust (lexer, parser, AST, VM, depurador, builtins)
 │   └── algoritmoslab-cli/     # Runner CLI mínimo para testes Golden (.alg) e validação rápida
-├── src-tauri/                 # Host desktop Tauri v2 (org.algoritmoslab.ide)
+├── src-tauri/                 # Host desktop Tauri v2 (io.github.imarcosvinicius.AlgoritmosLab)
 ├── src/                       # Frontend React + TypeScript + CodeMirror 6
 ├── tests/
 │   └── golden/                # Suíte .alg (UTF-8 e Windows-1252) + entradas/saídas esperadas
@@ -34,7 +34,7 @@ algoritmoslab/
    - Instalar pacotes de sistema do Tauri v2 no Ubuntu (`libwebkit2gtk-4.1-dev`, `build-essential`, `curl`, `wget`, `file`, `libxdo-dev`, `libssl-dev`, `libayatana-appindicator3-dev`, `librsvg2-dev`).
 2. **Inicialização do projeto:**
    - Criar `Cargo.toml` (workspace com `crates/algoritmoslab-core` e `crates/algoritmoslab-cli`).
-   - Inicializar frontend React + TypeScript + Vite e `src-tauri` com identificador `org.algoritmoslab.ide` e título `AlgoritmosLab`.
+   - Inicializar frontend React + TypeScript + Vite e `src-tauri` com identificador `io.github.imarcosvinicius.AlgoritmosLab` e título `AlgoritmosLab`.
    - Adicionar `LICENSE` (GPL-3.0) e configuração inicial de linter/formatação (`cargo clippy`, `eslint`/TypeScript estrito).
 
 **Critério de pronto:** `cargo test` executa sem erros e `npm run tauri dev` abre a janela básica do **AlgoritmosLab** no Ubuntu.

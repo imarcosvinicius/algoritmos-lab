@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>io.github.imarcosvinicius.AlgoritmosLab</id>
+
+  <name>AlgoritmosLab</name>
+  <summary>IDE educacional para algoritmos em Portugol estruturado</summary>
+
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0-only</project_license>
+
+  <developer id="io.github.imarcosvinicius">
+    <name>AlgoritmosLab Contributors</name>
+  </developer>
+
+  <description>
+    <p>
+      AlgoritmosLab é uma IDE desktop aberta, leve e multiplataforma para
+      programação em Portugol estruturado (.alg), funcionando 100% offline
+      e sem telemetria.
+    </p>
+    <p>Principais recursos:</p>
+    <ul>
+      <li>Editor moderno com destaque de sintaxe, numeração de linhas, breakpoints clicáveis e Modo Prova</li>
+      <li>Depurador integrado com execução contínua, passo a passo, pilha de chamadas e inspetor de variáveis</li>
+      <li>Compatibilidade com vetores, matrizes, registros, sub-rotinas por valor ou referência e funções matemáticas e de texto</li>
+      <li>Abertura e gravação com suporte transparente a UTF-8 e Windows-1252</li>
+      <li>Execução protegida contra loops infinitos, estouro de memória e acesso indevido a disco</li>
+    </ul>
+  </description>
+
+  <launchable type="desktop-id">io.github.imarcosvinicius.AlgoritmosLab.desktop</launchable>
+
+  <url type="homepage">https://github.com/imarcosvinicius/algoritmos-lab</url>
+  <url type="bugtracker">https://github.com/imarcosvinicius/algoritmos-lab/issues</url>
+  <url type="vcs-browser">https://github.com/imarcosvinicius/algoritmos-lab</url>
+
+  <branding>
+    <color type="primary" scheme_preference="light">#2563eb</color>
+    <color type="primary" scheme_preference="dark">#1e3a8a</color>
+  </branding>
+
+  <content_rating type="oars-1.1" />
+
+  <releases>
+    <release version="0.2.0" date="2026-11-12">
+      <description>
+        <p>Lançamento inicial multiplataforma com editor CodeMirror 6, depurador integrado, sandbox de arquivos e suporte a UTF-8 e Windows-1252.</p>
+      </description>
+    </release>
+  </releases>
+</component>

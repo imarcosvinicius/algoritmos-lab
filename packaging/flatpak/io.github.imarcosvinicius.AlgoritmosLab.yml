@@ -1,0 +1,48 @@
+app-id: io.github.imarcosvinicius.AlgoritmosLab
+runtime: org.gnome.Platform
+runtime-version: '50'
+sdk: org.gnome.Sdk
+sdk-extensions:
+  - org.freedesktop.Sdk.Extension.rust-stable
+  - org.freedesktop.Sdk.Extension.node24
+command: algoritmoslab
+
+finish-args:
+  - --share=ipc
+  - --socket=fallback-x11
+  - --socket=wayland
+  - --device=dri
+  - --filesystem=home
+
+modules:
+  - name: algoritmoslab
+    buildsystem: simple
+    build-options:
+      append-path: /usr/lib/sdk/rust-stable/bin:/usr/lib/sdk/node24/bin
+      env:
+        CARGO_HOME: /run/build/algoritmoslab/cargo
+        CARGO_NET_OFFLINE: 'true'
+        XDG_CACHE_HOME: /run/build/algoritmoslab/flatpak-node/cache
+        npm_config_cache: /run/build/algoritmoslab/flatpak-node/npm-cache
+    build-commands:
+      - npm install --offline
+      - npm run build
+      - cargo build --manifest-path src-tauri/Cargo.toml --release --locked --offline
+      - install -Dm755 src-tauri/target/release/algoritmoslab /app/bin/algoritmoslab
+      - install -Dm644 packaging/flatpak/io.github.imarcosvinicius.AlgoritmosLab.desktop /app/share/applications/io.github.imarcosvinicius.AlgoritmosLab.desktop
+      - install -Dm644 packaging/flatpak/io.github.imarcosvinicius.AlgoritmosLab.metainfo.xml /app/share/metainfo/io.github.imarcosvinicius.AlgoritmosLab.metainfo.xml
+      - install -Dm644 src-tauri/icons/128x128.png /app/share/icons/hicolor/128x128/apps/io.github.imarcosvinicius.AlgoritmosLab.png
+      - install -Dm644 src-tauri/icons/128x128@2x.png /app/share/icons/hicolor/256x256/apps/io.github.imarcosvinicius.AlgoritmosLab.png
+      - install -Dm644 src-tauri/icons/icon.png /app/share/icons/hicolor/512x512/apps/io.github.imarcosvinicius.AlgoritmosLab.png
+    sources:
+      - type: dir
+        path: ../..
+        skip:
+          - .git
+          - node_modules
+          - target
+          - src-tauri/target
+          - dist
+          - .flatpak-builder
+      - node-sources.json
+      - cargo-sources.json
