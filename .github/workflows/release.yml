@@ -29,7 +29,7 @@ jobs:
 
     steps:
       - name: Baixar repositório
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Instalar dependências de sistema (Linux)
         if: runner.os == 'Linux'
@@ -45,7 +45,7 @@ jobs:
             file
 
       - name: Configurar Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: "24"
           cache: npm
@@ -97,7 +97,7 @@ jobs:
           ls -lh release-assets/
 
       - name: Enviar artefatos da plataforma
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: release-${{ runner.os }}
           path: release-assets/*
@@ -111,7 +111,7 @@ jobs:
 
     steps:
       - name: Baixar repositório
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Construir bundle Flatpak (.flatpak)
         uses: flatpak/flatpak-github-actions/flatpak-builder@v6
@@ -121,7 +121,7 @@ jobs:
           cache: true
 
       - name: Enviar bundle Flatpak
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: release-Flatpak
           path: AlgoritmosLab-x86_64.flatpak
@@ -136,13 +136,13 @@ jobs:
 
     steps:
       - name: Baixar todos os instaladores
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           path: dist-release
           merge-multiple: true
 
       - name: Publicar na aba Releases do GitHub
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           generate_release_notes: true
           files: dist-release/*
